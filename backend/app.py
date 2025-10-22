@@ -1,16 +1,16 @@
-п»їfrom flask import Flask, request, jsonify
+from flask import Flask, request, jsonify
 import telebot
 import random
 import json
 
 app = Flask(__name__)
 
-# вњ… Рў Рў Рў (СѓР¶Рµ РіРѕС‚РѕРІ!)
+# ? Т Т Т (уже готов!)
 BOT_TOKEN = '8376293649:AAEfNUQNIrPKS37B1cM5pbvyuuzIUvV1F0Y'
 bot = telebot.TeleBot(BOT_TOKEN)
 
-# Р±РЅРѕРІРё СЌС‚РѕС‚ URL РїРѕСЃР»Рµ РґРµРїР»РѕСЏ mini-app!
-MINI_APP_URL = 'https://giftsxrobot-mini.vercel.app'
+# бнови этот URL после деплоя mini-app!
+MINI_APP_URL = 'https://giftsxrobot-xxx.vercel.app'
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -26,42 +26,42 @@ def set_webhook():
     webhook_url = request.url_root + 'webhook'
     bot.remove_webhook()
     bot.set_webhook(webhook_url)
-    return 'вњ… РµР±С…СѓРє СѓСЃС‚Р°РЅРѕРІР»РµРЅ!'
+    return '? ебхук установлен!'
 
 @bot.message_handler(commands=['start'])
 def start(message):
     markup = telebot.types.InlineKeyboardMarkup()
     button = telebot.types.InlineKeyboardButton(
-        text='рџЋ° РіСЂР°С‚СЊ РІ Crash Gifts', 
+        text='?? грать в Crash Gifts', 
         web_app=telebot.types.WebAppInfo(url=MINI_APP_URL)
     )
     markup.add(button)
     bot.send_message(
         message.chat.id, 
-        'рџЋ‰ РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ РІ Crash Gifts Casino!\n'
-        'рџ’Ћ РіСЂР°Р№ РІ Crash Рё РІС‹РёРіСЂС‹РІР°Р№ TON!\n\n'
-        'Р°Р¶РјРё РєРЅРѕРїРєСѓ РЅРёР¶Рµ Рё РЅР°С‡РёРЅР°Р№ рџљЂ',
+        '?? обро пожаловать в Crash Gifts Casino!\n'
+        '?? грай в Crash и выигрывай TON!\n\n'
+        'ажми кнопку ниже и начинай ??',
         reply_markup=markup
     )
 
 @app.route('/api/generate_crash', methods=['GET'])
 def generate_crash():
     r = random.random()
-    if r < 0.01:        # 1% С€Р°РЅСЃ
+    if r < 0.01:        # 1% шанс
         crash = random.uniform(50, 100)
-    elif r < 0.05:      # 4% С€Р°РЅСЃ
+    elif r < 0.05:      # 4% шанс
         crash = random.uniform(10, 50)
-    elif r < 0.2:       # 15% С€Р°РЅСЃ
+    elif r < 0.2:       # 15% шанс
         crash = random.uniform(5, 10)
-    elif r < 0.5:       # 30% С€Р°РЅСЃ
+    elif r < 0.5:       # 30% шанс
         crash = random.uniform(2, 5)
-    else:               # 50% С€Р°РЅСЃ
+    else:               # 50% шанс
         crash = random.uniform(1.01, 2)
     return jsonify({'crash_point': round(crash, 2)})
 
 @app.route('/')
 def index():
-    return 'рџљЂ GiftsXrobot Casino Bot СЂР°Р±РѕС‚Р°РµС‚!'
+    return '?? GiftsXrobot Casino Bot работает!'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

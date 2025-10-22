@@ -1,17 +1,17 @@
-п»їconst tg = window.Telegram.WebApp;
+const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-// РіСЂРѕРІС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ
+// гровые переменные
 let gameActive = false;
 let crashPoint = 0;
 let currentMultiplier = 1.00;
 let interval;
-const BACKEND_URL = 'https://giftsxrobot-backend.vercel.app'; // Р±РЅРѕРІРё РїРѕСЃР»Рµ РґРµРїР»РѕСЏ!
+const BACKEND_URL = 'https://giftsxrobot-xxx.vercel.app'; // бнови после деплоя!
 
-// СЂРёРІРµС‚СЃС‚РІРёРµ
-const userName = tg.initDataUnsafe?.user?.first_name || 'РіСЂРѕРє';
-document.getElementById('welcome-text').textContent = СЂРёРІРµС‚, ! рџ‘‹;
+// риветствие
+const userName = tg.initDataUnsafe?.user?.first_name || 'грок';
+document.getElementById('welcome-text').textContent = ривет, ! ??;
 
 // TON Connect
 const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
@@ -27,12 +27,12 @@ tonConnectUI.onStatusChange(wallet => {
     }
 });
 
-// Р±РЅРѕРІР»РµРЅРёРµ Р±Р°Р»Р°РЅСЃР° (РґРµРјРѕ)
+// бновление баланса (демо)
 async function updateBalance() {
     document.getElementById('balance').textContent = '0.50 TON';
 }
 
-// рџЋІ  Р«
+// ??  Ы
 document.getElementById('bet-btn').addEventListener('click', async () => {
     if (gameActive) return;
     
@@ -43,32 +43,32 @@ document.getElementById('bet-btn').addEventListener('click', async () => {
     
     betBtn.style.display = 'none';
     cashoutBtn.style.display = 'inline-block';
-    status.textContent = 'рџљЂ Р°РїСѓСЃРє...';
+    status.textContent = '?? апуск...';
     
-    // РѕР»СѓС‡Р°РµРј С‚РѕС‡РєСѓ РєСЂР°С€Р° РѕС‚ Р±СЌРєРµРЅРґР°
+    // олучаем точку краша от бэкенда
     try {
         const response = await fetch(${BACKEND_URL}/api/generate_crash);
         const data = await response.json();
         crashPoint = data.crash_point;
     } catch(e) {
-        // Fallback РґР»СЏ С‚РµСЃС‚Р°
+        // Fallback для теста
         crashPoint = Math.random() < 0.5 ? 1.5 : Math.random() * 10 + 1;
     }
     
     currentMultiplier = 1.00;
     updateMultiplier();
     
-    // РЅРёРјР°С†РёСЏ СЂРѕСЃС‚Р° РјРЅРѕР¶РёС‚РµР»СЏ
+    // нимация роста множителя
     interval = setInterval(() => {
         if (currentMultiplier >= crashPoint) {
-            // рџ’Ґ РЁ!
+            // ?? Ш!
             gameActive = false;
             clearInterval(interval);
             
             const multiplierEl = document.getElementById('multiplier');
-            multiplierEl.textContent = 'рџ’Ґ CRASH!';
+            multiplierEl.textContent = '?? CRASH!';
             multiplierEl.className = 'crash-animation';
-            status.textContent = СЂР°С€ РЅР° x;
+            status.textContent = раш на x;
             
             betBtn.style.display = 'inline-block';
             cashoutBtn.style.display = 'none';
@@ -76,16 +76,16 @@ document.getElementById('bet-btn').addEventListener('click', async () => {
             setTimeout(() => {
                 multiplierEl.className = 'multiplier-green';
                 multiplierEl.textContent = '1.00x';
-                status.textContent = 'рџЋЇ РѕС‚РѕРІ Рє РёРіСЂРµ';
+                status.textContent = '?? отов к игре';
             }, 2000);
         } else {
             currentMultiplier += 0.05;
             updateMultiplier();
         }
-    }, 80); // С‹СЃС‚СЂРµРµ Р°РЅРёРјР°С†РёСЏ!
+    }, 80); // ыстрее анимация!
 });
 
-// Р±РЅРѕРІР»РµРЅРёРµ РјРЅРѕР¶РёС‚РµР»СЏ + С†РІРµС‚Р°
+// бновление множителя + цвета
 function updateMultiplier() {
     const elem = document.getElementById('multiplier');
     elem.textContent = ${currentMultiplier.toFixed(2)}x;
@@ -99,7 +99,7 @@ function updateMultiplier() {
     }
 }
 
-// рџ’°  Р«
+// ??  Ы
 document.getElementById('cashout-btn').addEventListener('click', () => {
     if (!gameActive) return;
     
@@ -107,7 +107,7 @@ document.getElementById('cashout-btn').addEventListener('click', () => {
     clearInterval(interval);
     
     const status = document.getElementById('status');
-    status.textContent = вњ… С‹РІРѕРґ РЅР° x!;
+    status.textContent = ? ывод на x!;
     
     document.getElementById('bet-btn').style.display = 'inline-block';
     document.getElementById('cashout-btn').style.display = 'none';
@@ -115,6 +115,6 @@ document.getElementById('cashout-btn').addEventListener('click', () => {
     setTimeout(() => {
         document.getElementById('multiplier').className = 'multiplier-green';
         document.getElementById('multiplier').textContent = '1.00x';
-        status.textContent = 'рџЋЇ РѕС‚РѕРІ Рє РёРіСЂРµ';
+        status.textContent = '?? отов к игре';
     }, 2000);
 });

@@ -1,11 +1,11 @@
-п»їfrom flask import Flask, request, jsonify
+from flask import Flask, request, jsonify
 import telebot
 import random
 import json
 
 app = Flask(__name__)
 
-BOT_TOKEN = 'Рў_Рў_Рў'
+BOT_TOKEN = '8376293649:AAEfNUQNIrPKS37B1cM5pbvyuuzIUvV1F0Y'
 bot = telebot.TeleBot(BOT_TOKEN)
 MINI_APP_URL = 'https://giftsxrobot-mini.vercel.app'
 
@@ -23,19 +23,19 @@ def set_webhook():
     webhook_url = request.url_root + 'webhook'
     bot.remove_webhook()
     bot.set_webhook(webhook_url)
-    return 'РµР±С…СѓРє СѓСЃС‚Р°РЅРѕРІР»РµРЅ!'
+    return 'ебхук установлен!'
 
 @bot.message_handler(commands=['start'])
 def start(message):
     markup = telebot.types.InlineKeyboardMarkup()
     button = telebot.types.InlineKeyboardButton(
-        text='рџЋ° РіСЂР°С‚СЊ РІ Crash Gifts', 
+        text='?? грать в Crash Gifts', 
         web_app=telebot.types.WebAppInfo(url=MINI_APP_URL)
     )
     markup.add(button)
     bot.send_message(
         message.chat.id, 
-        'рџЋ‰ РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ РІ Crash Gifts Casino!\nР°Р¶РјРё РєРЅРѕРїРєСѓ РЅРёР¶Рµ Рё РЅР°С‡РёРЅР°Р№ РёРіСЂР°С‚СЊ рџљЂ',
+        '?? обро пожаловать в Crash Gifts Casino!\nажми кнопку ниже и начинай играть ??',
         reply_markup=markup
     )
 
@@ -56,7 +56,7 @@ def generate_crash():
 
 @app.route('/')
 def index():
-    return 'рџљЂ Casino Bot СЂР°Р±РѕС‚Р°РµС‚!'
+    return '?? Casino Bot работает!'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

@@ -1,12 +1,15 @@
-from flask import Flask, request, jsonify
+п»їfrom flask import Flask, request, jsonify
 import telebot
 import random
 import json
 
 app = Flask(__name__)
 
+# вњ… Рў Рў Рў (СѓР¶Рµ РіРѕС‚РѕРІ!)
 BOT_TOKEN = '8376293649:AAEfNUQNIrPKS37B1cM5pbvyuuzIUvV1F0Y'
 bot = telebot.TeleBot(BOT_TOKEN)
+
+# Р±РЅРѕРІРё СЌС‚РѕС‚ URL РїРѕСЃР»Рµ РґРµРїР»РѕСЏ mini-app!
 MINI_APP_URL = 'https://giftsxrobot-mini.vercel.app'
 
 @app.route('/webhook', methods=['POST'])
@@ -23,40 +26,42 @@ def set_webhook():
     webhook_url = request.url_root + 'webhook'
     bot.remove_webhook()
     bot.set_webhook(webhook_url)
-    return 'ебхук установлен!'
+    return 'вњ… РµР±С…СѓРє СѓСЃС‚Р°РЅРѕРІР»РµРЅ!'
 
 @bot.message_handler(commands=['start'])
 def start(message):
     markup = telebot.types.InlineKeyboardMarkup()
     button = telebot.types.InlineKeyboardButton(
-        text='?? грать в Crash Gifts', 
+        text='рџЋ° РіСЂР°С‚СЊ РІ Crash Gifts', 
         web_app=telebot.types.WebAppInfo(url=MINI_APP_URL)
     )
     markup.add(button)
     bot.send_message(
         message.chat.id, 
-        '?? обро пожаловать в Crash Gifts Casino!\nажми кнопку ниже и начинай играть ??',
+        'рџЋ‰ РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ РІ Crash Gifts Casino!\n'
+        'рџ’Ћ РіСЂР°Р№ РІ Crash Рё РІС‹РёРіСЂС‹РІР°Р№ TON!\n\n'
+        'Р°Р¶РјРё РєРЅРѕРїРєСѓ РЅРёР¶Рµ Рё РЅР°С‡РёРЅР°Р№ рџљЂ',
         reply_markup=markup
     )
 
 @app.route('/api/generate_crash', methods=['GET'])
 def generate_crash():
     r = random.random()
-    if r < 0.01:
+    if r < 0.01:        # 1% С€Р°РЅСЃ
         crash = random.uniform(50, 100)
-    elif r < 0.05:
+    elif r < 0.05:      # 4% С€Р°РЅСЃ
         crash = random.uniform(10, 50)
-    elif r < 0.2:
+    elif r < 0.2:       # 15% С€Р°РЅСЃ
         crash = random.uniform(5, 10)
-    elif r < 0.5:
+    elif r < 0.5:       # 30% С€Р°РЅСЃ
         crash = random.uniform(2, 5)
-    else:
+    else:               # 50% С€Р°РЅСЃ
         crash = random.uniform(1.01, 2)
     return jsonify({'crash_point': round(crash, 2)})
 
 @app.route('/')
 def index():
-    return '?? Casino Bot работает!'
+    return 'рџљЂ GiftsXrobot Casino Bot СЂР°Р±РѕС‚Р°РµС‚!'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

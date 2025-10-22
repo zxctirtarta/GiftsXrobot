@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crash Gifts Casino</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <script src="script.js" defer></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: white; 
+            font-family: -apple-system, sans-serif;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        .container { max-width: 400px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .balance { 
+            background: rgba(0, 255, 128, 0.1); 
+            border: 1px solid #00ff80; 
+            border-radius: 15px; 
+            padding: 15px; 
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        #multiplier { 
+            font-size: 4em; 
+            font-weight: bold; 
+            text-align: center; 
+            margin: 30px 0;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .controls { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        button { 
+            padding: 15px 25px; 
+            border: none; 
+            border-radius: 12px; 
+            font-size: 16px; 
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-primary { background: linear-gradient(45deg, #667eea, #764ba2); color: white; }
+        .btn-success { background: linear-gradient(45deg, #00ff80, #00cc66); color: black; }
+        .btn-danger { background: linear-gradient(45deg, #ff6b6b, #ee5a52); color: white; }
+        button:active { transform: scale(0.95); }
+        .game-status { text-align: center; margin: 20px 0; font-size: 18px; }
+        .crash-animation { animation: crash 0.5s ease-out; }
+        @keyframes crash { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(0.8); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Crash Gifts</h1>
+            <div class="balance">
+                <strong id="balance">0.00 TON</strong>
+            </div>
+        </div>
+        
+        <div id="connect-section">
+            <button id="connect-wallet" class="btn-primary" style="width: 100%;">
+                💳 одключить TON кошелёк
+            </button>
+        </div>
+        
+        <div id="game-section" style="display: none;">
+            <div id="multiplier">1.00x</div>
+            <div class="game-status" id="status">отов к игре</div>
+            <div class="controls">
+                <button id="bet-btn" class="btn-success">🎲 грать (0.5 TON)</button>
+                <button id="cashout-btn" class="btn-danger" style="display: none;">💰 ывести</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

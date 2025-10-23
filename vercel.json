@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "builds": [
     {
       "src": "backend/app.py",
@@ -19,7 +20,7 @@
       "dest": "backend/app.py"
     },
     {
-      "src": "/webhook",
+      "src": "/8376293649:AAEfNUQNIrPKS37B1cM5pbvyuuzIUvV1F0Y",
       "dest": "backend/app.py"
     },
     {
